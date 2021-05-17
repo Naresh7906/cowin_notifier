@@ -59,7 +59,4 @@ while True :
     if shown == 0 :
         print("No available slots")
 
-    check_dt = datetime.now() + timedelta(seconds=5)
-
-    if datetime.now() < check_dt : 
-        sleep(5)
+    sleep(5)
