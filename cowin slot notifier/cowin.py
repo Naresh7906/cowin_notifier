@@ -6,8 +6,9 @@ import smtplib, ssl
 port = 465
 smtp_server = "smtp.gmail.com"
 sender_email = "abc@gmail.com"
-receiver_email = "xyz@gmail.com"
+receiver_email = sender_email 
 password = "password"
+
 message = """\
 Subject: Vaccination center found
 
@@ -16,6 +17,7 @@ date : {}
 name : {}
 address : {}
 """
+
 pincodes = ['411033','411017']
 date_no = 3
 today_date = datetime.now()
