@@ -60,3 +60,4 @@ while True :
         print("No available slots")
 
     sleep(5)
+
