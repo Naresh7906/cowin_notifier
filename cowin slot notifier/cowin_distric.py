@@ -1,4 +1,5 @@
 import requests
+from requests.models import Response
 from fake_useragent import UserAgent
 from datetime import datetime, timedelta
 from time import sleep
@@ -15,14 +16,14 @@ Subject: Vaccination center found
 """
 add_val = """
 
-Pincode : {}   
+District : {}   
 Date : {}
 Name : {}
 Address : {}
 Capacity : {}"""
 
 
-res_pin = []
+res_dist = []
 res_date = []
 res_name = []
 res_add = []
@@ -31,15 +32,16 @@ res_cap = []
 def format_msg(count):
     ret_msg = """"""
     for i in range(0,count):
-        ret_msg = ret_msg + add_val.format(res_pin[i],res_date[i],res_name[i],res_add[i],res_cap[i])
+        ret_msg = ret_msg + add_val.format(res_dist[i],res_date[i],res_name[i],res_add[i],res_cap[i])
     return  message + ret_msg
 
-
-pincodes = ['411033','411017']
+districts = ['363']
 date_no = 3
 today_date = datetime.now()
 un_date=[]
 fo_date = []
+old_res = {}
+
 
 for i in range(date_no):
     un_date = un_date + [today_date + timedelta(days=i)]
@@ -49,9 +51,9 @@ for i in un_date:
 
 while True :
     shown = 0
-    for pincode in pincodes:
+    for district in districts:
         for date in fo_date:
-            URL = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode={}&date={}".format(pincode, date)
+            URL = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id={}&date={}".format(district, date)
             temp_user_agent = UserAgent()
             header = {'User-Agent': temp_user_agent.random}
 
@@ -62,17 +64,15 @@ while True :
                 for res in result["centers"]:
                     for session in res["sessions"]:
                         if session["available_capacity"] > 0 :
-                            print("pincode : " + pincode)
+                            print("district : " + res["district_name"])
                             print("date : " + date)
                             print("center name : " + res["name"])
-                            res_pin = res_pin + [res["pincode"]]
+                            res_dist = res_dist + [res["district_name"]]
                             res_date = res_date + [date]
                             res_name = res_name + [res["name"]]
                             res_add = res_add + [res["address"]]
                             res_cap = res_cap + [session["available_capacity"]]
                             shown = shown + 1
-                            shown = shown + 1
-
             else : print("error occurred, error code : " + str(cowin_res.status_code))
     
     if shown == 0 :
@@ -84,6 +84,5 @@ while True :
         with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
             server.login(sender_email, password)
             server.sendmail(sender_email, receiver_email, new_msg)
-
     sleep(5)
 
