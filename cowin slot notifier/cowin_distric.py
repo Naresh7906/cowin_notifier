@@ -1,5 +1,4 @@
 import requests
-from requests.models import Response
 from fake_useragent import UserAgent
 from datetime import datetime, timedelta
 from time import sleep
@@ -35,6 +34,13 @@ def format_msg(count):
         ret_msg = ret_msg + add_val.format(res_dist[i],res_date[i],res_name[i],res_add[i],res_cap[i])
     return  message + ret_msg
 
+def exist(name,ex_Date):
+    if name in res_name:
+        i = res_name.index(name)
+        if res_date[i] == ex_Date:
+            return True
+    return False
+
 districts = ['363']
 date_no = 3
 today_date = datetime.now()
@@ -63,7 +69,7 @@ while True :
                 result = cowin_res.json()
                 for res in result["centers"]:
                     for session in res["sessions"]:
-                        if session["available_capacity"] > 0 and res["name"] not in res_name:
+                        if session["available_capacity"] > 0 and exist(res["name"],date) == False:
                             print("district : " + res["district_name"])
                             print("date : " + date)
                             print("center name : " + res["name"])
