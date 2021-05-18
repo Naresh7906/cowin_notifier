@@ -61,7 +61,7 @@ while True :
                 result = cowin_res.json()
                 for res in result["centers"]:
                     for session in res["sessions"]:
-                        if session["available_capacity"] > 0 :
+                        if session["available_capacity"] > 0 and res["name"] not in res_name:
                             print("pincode : " + pincode)
                             print("date : " + date)
                             print("center name : " + res["name"])
