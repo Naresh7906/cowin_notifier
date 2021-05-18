@@ -75,7 +75,7 @@ while True :
 
             else : print("error occurred, error code : " + str(cowin_res.status_code))
     
-    if shown == 0 :
+    if shown == 0 and old_res != result:
         print("No available slots")
     elif old_res != result : 
         old_res = result
@@ -84,6 +84,6 @@ while True :
         with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
             server.login(sender_email, password)
             server.sendmail(sender_email, receiver_email, new_msg)
-
+    else : print("No new slots found")
     sleep(5)
 
