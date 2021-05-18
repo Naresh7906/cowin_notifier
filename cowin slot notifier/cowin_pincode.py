@@ -40,12 +40,13 @@ def exist(name,ex_Date):
         if res_date[i] == ex_Date:
             return True
     return False
-    
+
 pincodes = ['411033','411017']
 date_no = 3
 today_date = datetime.now()
 un_date=[]
 fo_date = []
+old_res = {}
 
 for i in range(date_no):
     un_date = un_date + [today_date + timedelta(days=i)]
