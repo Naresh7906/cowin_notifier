@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from time import sleep
 import smtplib, ssl
 
+
 port = 465
 smtp_server = "smtp.gmail.com"
 sender_email = "abc@gmail.com"
@@ -73,6 +74,7 @@ while True :
                             print("district : " + res["district_name"])
                             print("date : " + date)
                             print("center name : " + res["name"])
+                            print("Pincode : "+ str(res["pincode"]))
                             res_dist = res_dist + [res["district_name"]]
                             res_date = res_date + [date]
                             res_name = res_name + [res["name"]]

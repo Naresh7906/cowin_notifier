@@ -42,7 +42,7 @@ def exist(name,ex_Date):
     return False
 
 pincodes = ['411033','411017']
-date_no = 3
+date_no = 7
 today_date = datetime.now()
 un_date=[]
 fo_date = []
